@@ -31,4 +31,5 @@ func (store *Postgres) NewStore() error {
 
 type StoreOperations interface {
 	NewStore() error
+	CreateUser(user *model.User) error
 }
