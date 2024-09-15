@@ -18,4 +18,5 @@ var (
 
 var (
 	NewServer = "new-server"
+	NewStore  = "new-store"
 )
