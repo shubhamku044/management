@@ -1,9 +1,9 @@
 package controller
 
 import (
-	"fmt"
-
+	"github.com/shubhamku044/management/model"
 	"github.com/shubhamku044/management/store"
+	"github.com/shubhamku044/management/util"
 )
 
 type Server struct {
@@ -11,9 +11,15 @@ type Server struct {
 }
 
 func (s *Server) NewServer(pgstore store.Postgres) {
+	util.SetLogger()
+	util.Logger.Infof("Logger setup is done\n")
 	s.PostgresDB = &pgstore
-	s.PostgresDB.NewStore()
-	fmt.Printf("Server: %v\n", s)
+	err := s.PostgresDB.NewStore()
+	if err != nil {
+		util.Log(model.LogLevelError, model.ControllerPackage, model.NewServer, "error in creating new store", err)
+	} else {
+		util.Log(model.LogLevelInfo, model.ControllerPackage, model.NewServer, "new store created", nil)
+	}
 }
 
 type ServerOperations interface {
