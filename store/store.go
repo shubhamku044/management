@@ -5,11 +5,11 @@ import (
 	"gorm.io/gorm"
 )
 
-type Postges struct {
+type Postgres struct {
 	DB *gorm.DB
 }
 
-func (store *Postges) NewStore() error {
+func (store *Postgres) NewStore() error {
 	dsn := "host=localhost user=management password=management dbname=management port=5432 sslmode=disable"
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
@@ -17,4 +17,8 @@ func (store *Postges) NewStore() error {
 	}
 	store.DB = db
 	return nil
+}
+
+type StoreOperations interface {
+	NewStore() error
 }

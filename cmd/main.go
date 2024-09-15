@@ -1,10 +1,15 @@
 package main
 
 import (
+	"fmt"
+
+	"github.com/shubhamku044/management/api"
 	"github.com/shubhamku044/management/controller"
-	"github.com/shubhamku044/management/store"
 )
 
 func main() {
-	server := &controller.Server{}
+	api := api.ApiRoutes{}
+	api.StartApp(controller.Server{})
+	fmt.Println("Server is running")
+	fmt.Printf("Main Server: %v\n", api)
 }
