@@ -8,10 +8,12 @@ import (
 
 type User struct {
 	ID        uuid.UUID `gorm:"primaryKey" json:"id"`
-	Name      Name      `gorm:"embedded" json:"name"`
-	Address   Address   `gorm:"embedded" json:"address"`
-	Active    bool      `json:"active"`
-	CreatedBy string    `json:"created_by"`
+	Name      Name      `gorm:"embedded" json:"name" binding:"required"`
+	Address   Address   `gorm:"embedded" json:"address" binding:"required"`
+	Active    bool      `json:"active" example:"true"`
+	Email     string    `json:"email" gorm:"unique; not null" example:"test@gmail.com" binding:"required"`
+	Password  string    `json:"password" gorm:"not null" example:"password" binding:"required"`
+	CreatedBy string    `json:"created_by" example:"shubham" binding:"required"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedBy string    `json:"updated_by"`
 	UpdatedAt time.Time `json:"updated_at"`
@@ -20,16 +22,16 @@ type User struct {
 }
 
 type Name struct {
-	FirstName  string `json:"first_name"`
-	MiddleName string `json:"middle_name"`
-	LastName   string `json:"last_name"`
+	FirstName  string `json:"first_name" example:"John" binding:"required"`
+	MiddleName string `json:"middle_name" example:"A." binding:"required"`
+	LastName   string `json:"last_name" example:"Doe" binding:"required"`
 }
 
 type Address struct {
-	Lane     string `json:"lane"`
-	Village  string `json:"village"`
-	City     string `json:"city"`
-	District string `json:"district"`
-	Pincode  int    `json:"pincode"`
-	State    string `json:"state"`
+	Lane     string `json:"lane" example:"123 Main St."`
+	Village  string `json:"village" example:"Springfield"`
+	City     string `json:"city" example:"Springfield" binding:"required"`
+	District string `json:"district" example:"Greene" binding:"required"`
+	Pincode  int    `json:"pincode" example:"12345" binding:"required"`
+	State    string `json:"state" example:"IL" binding:"required"`
 }
